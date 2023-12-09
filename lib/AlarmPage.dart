@@ -89,7 +89,7 @@ class _AlarmPageState extends State<AlarmPage> {
                           },
                         ),
                         IconButton(
-                          icon: Icon(Icons.delete),
+                          icon: Icon(Icons.deblur_outlined),
                           onPressed: () {
                             deleteAlarm(index); // 삭제 버튼을 누르면 해당 항목 삭제
                           },
