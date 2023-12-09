@@ -22,17 +22,18 @@ class _StopwatchpageState extends State<Stopwatchpage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title:Center(
-        child:Text('스톱워치')),
-        backgroundColor: Colors.purple,
-
+    appBar: AppBar(
+      title: Text(
+      ""),
+      backgroundColor: Colors.black,
       ),
       body: _buildBody(),
       bottomNavigationBar: BottomAppBar(
         child: Container(
+          color: Colors.black,
+
           height: 50,
-        ),
+      ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -40,8 +41,10 @@ class _StopwatchpageState extends State<Stopwatchpage> {
             _clickButton();
           });
         },
-        child: _isRunning ? Icon(Icons.pause) : Icon(Icons.play_arrow),
-      ),
+        child:Container(
+          color:Colors.white,
+          child:_isRunning ? Icon(Icons.pause) : Icon(Icons.play_arrow),
+      ),),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
@@ -89,17 +92,23 @@ class _StopwatchpageState extends State<Stopwatchpage> {
               right: 10,
               bottom: 20,
               child: ElevatedButton(
+
                 onPressed: () {
                   setState(() {
                     _recodeLapTime(formattedTime);
                   });
                 },
-                child: Text("랩타임"),
-              ),
+                child:Row(
+                  children:[
+                    Icon(Icons.add),
+                  Text("랩타임"),
+              ],
             ),
-          ],
+              ),
         ),
+      ],
       ),
+    ),
     );
   }
 
