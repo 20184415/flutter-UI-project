@@ -27,11 +27,11 @@ class _StopwatchpageState extends State<Stopwatchpage> {
       ""),
       backgroundColor: Colors.black,
       ),
+      backgroundColor: Colors.black,
       body: _buildBody(),
       bottomNavigationBar: BottomAppBar(
         child: Container(
           color: Colors.black,
-
           height: 50,
       ),
       ),
@@ -64,13 +64,17 @@ class _StopwatchpageState extends State<Stopwatchpage> {
                   children: [
                     Text(
                       formattedTime,
-                      style: TextStyle(fontSize: 80),
+                      style: TextStyle(
+                        fontSize: 80,
+                        color: Colors.white,//
+                                      ),
                     ),
                   ],
                 ),
                 Container(
                   width: 100,
                   height: 200,
+                  color: Colors.black,//
 
                   child: ListView(
                     children: _lapTimes.map((time) => Text(time)).toList(),

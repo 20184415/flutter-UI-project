@@ -16,6 +16,7 @@ class _MyHomePageState extends State<MyHomePage> {
     Stopwatchpage(),
     AlarmPage()
   ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,33 +26,34 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Colors.black,
         centerTitle: true,
         actions: [
-          IconButton(onPressed:(){},
+          IconButton(onPressed: () {},
               icon: Icon(Icons.add))
         ],
       ),
       body: _pages[_index],
       bottomNavigationBar: BottomNavigationBar(
-          onTap: (index){
-            setState(() {
-              _index = index;
-            });
-          },
-          currentIndex: _index,
-          items:[
-            BottomNavigationBarItem(
-              label: '홈',
-              icon: Icon(Icons.home),
-            ),
-            BottomNavigationBarItem(
-              label: '스톱워치',
-              icon: Icon(Icons.watch_later_rounded),
-
-            ),BottomNavigationBarItem(
-              label: '알람',
-              icon: Icon(Icons.alarm_add_rounded),
-            ),]
+        currentIndex: _index,
+        items: [
+          BottomNavigationBarItem(
+            label: '홈',
+            icon: Icon(Icons.home),
+          ),
+          BottomNavigationBarItem(
+            label: '스톱워치',
+            icon: Icon(Icons.watch_later_rounded),
+          ),
+          BottomNavigationBarItem(
+            label: '알람',
+            icon: Icon(Icons.alarm_add_rounded),
+          ),
+        ],
+        onTap: (index) {
+          setState(() {
+            _index = index;
+          });
+        },
       ),
-      //bottomNavigationBar: ,
     );
   }
 }
+
