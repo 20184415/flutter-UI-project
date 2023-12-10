@@ -22,20 +22,25 @@ class _StopwatchpageState extends State<Stopwatchpage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
     appBar: AppBar(
       title: Text(
       ""),
       backgroundColor: Colors.black,
       ),
-      backgroundColor: Colors.black,
-      body: _buildBody(),
-      bottomNavigationBar: BottomAppBar(
-        child: Container(
-          color: Colors.black,
-          height: 50,
-      ),
-      ),
-      floatingActionButton: FloatingActionButton(
+
+
+      body:_buildBody(),
+        floatingActionButton:Stack(
+      children: [
+          Positioned(
+                  right: 0,
+                  top: 210,
+          child:ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            shape: CircleBorder(),
+            padding: EdgeInsets.all(37),
+          ),
         onPressed: () {
           setState(() {
             _clickButton();
@@ -45,7 +50,9 @@ class _StopwatchpageState extends State<Stopwatchpage> {
           color:Colors.white,
           child:_isRunning ? Icon(Icons.pause) : Icon(Icons.play_arrow),
       ),),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        ),
+      ],
+        ),
     );
   }
 
@@ -53,68 +60,75 @@ class _StopwatchpageState extends State<Stopwatchpage> {
     var formattedTime = _formatTime(_time);
     return Center(
       child: Padding(
-        padding: EdgeInsets.only(top: 150),
+        padding: EdgeInsets.only(top: 30),
         child: Stack(
           children: [
             Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Text(
-                      formattedTime,
-                      style: TextStyle(
-                        fontSize: 80,
-                        color: Colors.white,//
-                                      ),
-                    ),
-                  ],
-                ),
-                Container(
-                  width: 100,
-                  height: 200,
-                  color: Colors.black,//
-
-                  child: ListView(
-                    children: _lapTimes.map((time) => Text(time)).toList(),
+                Text(
+                  formattedTime,
+                  style: TextStyle(
+                    fontSize: 80,
+                    color: Colors.white,
                   ),
-                )
+                ),
+                SizedBox(height: 20), // 알맞게 간격 조정
+
+                Expanded(
+                  child: ListView.separated(
+                    itemCount: _lapTimes.length,
+                    separatorBuilder: (BuildContext context, int index) {
+                      return Divider(
+                        color: Colors.white,
+                        thickness: 1.0,
+                        height: 1.0,
+                      );
+                    },
+                    itemBuilder: (BuildContext context, int index) {
+                      return ListTile(
+                        title: Text(
+                          _lapTimes[index],
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.white,
+                          ),
+                        ),
+                      );
+                    },
+                ),
+                ),
               ],
             ),
             Positioned(
               left: 10,
-              bottom: 30,
-              child: FloatingActionButton(
-                onPressed: () {
-                  _reset();
-                },
-                child: Icon(Icons.rotate_left),
-              ),
-            ),
-            Positioned(
-              right: 10,
-              bottom: 20,
+              top: 110,
               child: ElevatedButton(
-
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.white,
+                  shape: CircleBorder(),
+                  padding: EdgeInsets.all(35),
+                ),
                 onPressed: () {
-                  setState(() {
+                  if (_isRunning) {
                     _recodeLapTime(formattedTime);
-                  });
+                  } else {
+                    _reset();
+                  }
                 },
-                child:Row(
-                  children:[
-                    Icon(Icons.add),
-                  Text("랩타임"),
-              ],
-            ),
+                child: Container(
+                  color: Colors.white,
+                  child: _isRunning ? Text("랩타임") : Icon(Icons.rotate_right),
+                ),
               ),
+            ),
+          ],
         ),
-      ],
       ),
-    ),
     );
   }
+
 
   void _clickButton() {
     _isRunning = !_isRunning;
@@ -125,6 +139,16 @@ class _StopwatchpageState extends State<Stopwatchpage> {
       _pause();
     }
   }
+  void _clickButton2(){
+    _isRunning = !_isRunning;
+    if(_isRunning){
+      _reset();}
+      else{
+
+ //   _recodeLapTime(f);
+    }
+  }
+
 
   void _start() {
     _timer = Timer.periodic(Duration(milliseconds: 10), (timer) {
@@ -148,7 +172,7 @@ class _StopwatchpageState extends State<Stopwatchpage> {
   }
 
   void _recodeLapTime(String time) {
-    _lapTimes.insert(0, '$_time 순위 $time');
+    _lapTimes.insert(0, '$_time  $time');
   }
 
   String _formatTime(int time) {

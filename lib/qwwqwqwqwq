@@ -1,0 +1,17 @@
+child: ElevatedButton(
+                style:ElevatedButton.styleFrom (
+                  backgroundColor: Colors.white,
+                  shape: CircleBorder(),
+                  padding: EdgeInsets.all(38),
+                ),
+                onPressed: () {
+                  setState(() {
+                    _recodeLapTime(formattedTime);
+                  });
+                },
+                child:Row(
+                  children:[
+                  Text("랩타임"),
+              ],
+            ),
+              ),
