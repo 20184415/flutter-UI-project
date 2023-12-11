@@ -35,7 +35,7 @@ class _StopwatchpageState extends State<Stopwatchpage> {
       children: [
           Positioned(
                   right: 0,
-                  top: 210,
+                  bottom: 0,
           child:ElevatedButton(
           style: ElevatedButton.styleFrom(
             shape: CircleBorder(),
@@ -58,15 +58,16 @@ class _StopwatchpageState extends State<Stopwatchpage> {
 
   Widget _buildBody() {
     var formattedTime = _formatTime(_time);
-    return Center(
-      child: Padding(
-        padding: EdgeInsets.only(top: 30),
-        child: Stack(
-          children: [
-            Column(
+    return Stack(
+      children: [
+        Center(
+          child: Padding(
+            padding: EdgeInsets.only(bottom: 70),
+            child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                SizedBox(height: 30),
                 Text(
                   formattedTime,
                   style: TextStyle(
@@ -74,8 +75,7 @@ class _StopwatchpageState extends State<Stopwatchpage> {
                     color: Colors.white,
                   ),
                 ),
-                SizedBox(height: 20), // 알맞게 간격 조정
-
+                SizedBox(height: 20),
                 Expanded(
                   child: ListView.separated(
                     itemCount: _lapTimes.length,
@@ -97,38 +97,37 @@ class _StopwatchpageState extends State<Stopwatchpage> {
                         ),
                       );
                     },
-                ),
+                  ),
                 ),
               ],
             ),
-            Positioned(
-              left: 10,
-              top: 110,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.white,
-                  shape: CircleBorder(),
-                  padding: EdgeInsets.all(35),
-                ),
-                onPressed: () {
-                  if (_isRunning) {
-                    _recodeLapTime(formattedTime);
-                  } else {
-                    _reset();
-                  }
-                },
-                child: Container(
-                  color: Colors.white,
-                  child: _isRunning ? Text("랩타임") : Icon(Icons.rotate_right),
-                ),
-              ),
-            ),
-          ],
+          ),
         ),
-      ),
+        Positioned(
+          left: 10,
+          bottom: 10,
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.white,
+              shape: CircleBorder(),
+              padding: EdgeInsets.all(35),
+            ),
+            onPressed: () {
+              if (_isRunning) {
+                _recodeLapTime(formattedTime);
+              } else {
+                _reset();
+              }
+            },
+            child: Container(
+              color: Colors.white,
+              child: _isRunning ? Text("랩타임") : Icon(Icons.rotate_right),
+            ),
+          ),
+        ),
+      ],
     );
   }
-
 
   void _clickButton() {
     _isRunning = !_isRunning;
@@ -170,10 +169,20 @@ class _StopwatchpageState extends State<Stopwatchpage> {
       _time = 0;
     });
   }
+  int count = 1;
 
   void _recodeLapTime(String time) {
-    _lapTimes.insert(0, '$_time  $time');
+    _lapTimes.insert(0,       '$count 순위 $time');
+    count++;
   }
+
+
+
+
+
+
+
+
 
   String _formatTime(int time) {
     final formatter = NumberFormat("00");

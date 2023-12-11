@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 import 'dart:async';
 
-class AlarmPage extends StatefulWidget {
+class TimerPage1 extends StatefulWidget {
+  const TimerPage({Key? key}) : super(key: key);
+
   @override
-  AlarmPageState createState() => AlarmPageState();
+  TimerPage1State createState() => TimerPageState();
 }
 
-class AlarmPageState extends State<AlarmPage> {
+class TimerPage1State extends State<TimerPage> {
   List<AlarmEntry> alarms = [];
 
   @override
@@ -16,7 +19,7 @@ class AlarmPageState extends State<AlarmPage> {
       appBar: AppBar(
         backgroundColor: Colors.black,
         title: const Text(
-          '알람',
+          '타이머',
           style: TextStyle(
             fontSize: 30,
             color: Colors.white,
@@ -62,20 +65,21 @@ class AlarmPageState extends State<AlarmPage> {
                     fontSize: 20,
                   ),
                 ),
-                child: const Text('알람 추가'),
+                child: const Text('타이머 추가'),
               ),
               const SizedBox(height: 20),
               Expanded(
                 child: ListView.separated(
                   itemCount: alarms.length,
-                  separatorBuilder: (BuildContext context, int index) => Divider(
-                    color: Colors.white,
-                    thickness: 0.5,
-                  ),
+                  separatorBuilder: (BuildContext context, int index) =>
+                      Divider(
+                        color: Colors.white,
+                        thickness: 0.5,
+                      ),
                   itemBuilder: (BuildContext context, int index) {
                     return ListTile(
                       title: Text(
-                        DateFormat('hh:mm a').format(alarms[index].time),
+                        DateFormat('hh:mm').format(alarms[index].time),
                         style: const TextStyle(
                           fontSize: 20,
                           color: Colors.white,
@@ -89,6 +93,11 @@ class AlarmPageState extends State<AlarmPage> {
                             onChanged: (value) {
                               setState(() {
                                 alarms[index].isEnabled = value;
+                                if (value) {
+                                  startTimerForAlarm(index);
+                                } else {
+                                  stopTimerForAlarm(index);
+                                }
                               });
                             },
                           ),
@@ -116,14 +125,49 @@ class AlarmPageState extends State<AlarmPage> {
       alarms.removeAt(index);
     });
   }
+
+  void startTimerForAlarm(int index) {
+    setState(() {
+      alarms[index].isEnabled = true;
+      alarms[index].startTimer(() {
+        setState(() {});
+      });
+    });
+  }
+
+  void stopTimerForAlarm(int index) {
+    setState(() {
+      alarms[index].isEnabled = false;
+      alarms[index].stopTimer();
+    });
+  }
 }
 
 class AlarmEntry {
-  DateTime time;
-  bool isEnabled;
+  late Timer _timer;
+  bool isEnabled = false;
+  late DateTime time;
+  late Function() setState;
+
+  void startTimer(Function() stateSet) {
+    setState = stateSet;
+    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+      if (isEnabled) {
+        time = time.subtract(Duration(seconds: 1));
+        setState();
+      }
+    });
+  }
 
   AlarmEntry({
-    required this.time,
-    required this.isEnabled,
-  });
+    required DateTime time,
+    required bool isEnabled,
+  }) {
+    this.time = time;
+    this.isEnabled = isEnabled;
+  }
+
+  void stopTimer() {
+    _timer.cancel();
+  }
 }

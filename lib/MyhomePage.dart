@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'Page1.dart';
+import 'TimerPage.dart';
 import 'Stopwatchpage.dart';
 import 'AlarmPage.dart';
 class MyHomePage extends StatefulWidget {
@@ -12,7 +12,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   var _index = 0;
   var _pages = [
-    Page1(),
+   TimerPage(),
     Stopwatchpage(),
     AlarmPage()
   ];
@@ -35,8 +35,8 @@ class _MyHomePageState extends State<MyHomePage> {
         currentIndex: _index,
         items: [
           BottomNavigationBarItem(
-            label: '홈',
-            icon: Icon(Icons.home),
+            label: '타이머',
+            icon: Icon(Icons.timer),
           ),
           BottomNavigationBarItem(
             label: '스톱워치',
