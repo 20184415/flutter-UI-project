@@ -18,11 +18,6 @@ class TimerPageState extends State<TimerPage> {
   int _timeInSeconds = 0;
   late Timer _timer;
 
-  @override
-  void dispose() {
-    _timer.cancel();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +58,7 @@ class TimerPageState extends State<TimerPage> {
   void _showTimePicker(BuildContext context) async {
     final pickedTime = await showTimePicker(
       context: context,
-      initialTime: TimeOfDay(hour: 0, minute: 1), // 초기 시간 설정
+      initialTime: TimeOfDay(hour: 0, minute: 1),
     );
 
     if (pickedTime != null) {
@@ -74,7 +69,7 @@ class TimerPageState extends State<TimerPage> {
     }
   }
 
-  void _startTimer() {
+  void _startTimer() {  //감소
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
         if (_timeInSeconds > 0) {
@@ -89,11 +84,11 @@ class TimerPageState extends State<TimerPage> {
 
   void _resetTimer() {
     setState(() {
-      _timeInSeconds = 0; // 60초로 초기화 또는 원하는 초를 입력하세요.
+      _timeInSeconds = 0;
     });
   }
 
-  String _formattedTime() {
+  String _formattedTime() { //변환
     final minutes = (_timeInSeconds ~/ 60).toString().padLeft(2, '0');
     final seconds = (_timeInSeconds % 60).toString().padLeft(2, '0');
     return '$minutes:$seconds';
