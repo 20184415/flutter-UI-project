@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 
-void main() {
-  runApp(MaterialApp(
-    home: TimerPage(),
-  ));
-}
+
 
 class TimerPage extends StatefulWidget {
   const TimerPage({Key? key}) : super(key: key);
@@ -81,6 +77,7 @@ class TimerPageState extends State<TimerPage> {
           _timeInSeconds--;
         } else {
           _timer.cancel();
+          //소리를 울림
         }
       });
     });
