@@ -44,6 +44,9 @@ class AlarmPageState extends State<AlarmPage> {
                       alarms.add(
                         AlarmEntry(
                           time: DateTime(
+                            DateTime.now().year,
+                            DateTime.now().month,
+                            DateTime.now().day,
                             pickedTime.hour,
                             pickedTime.minute,
                           ),
