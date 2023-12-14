@@ -23,7 +23,12 @@ class TimerPageState extends State<TimerPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('타이머'),
+        title:  Text("타이머",
+            style: TextStyle(
+              color: Colors.white,
+                  fontSize: 30,
+              fontWeight: FontWeight.bold,
+        )),
         backgroundColor: Colors.black,
       ),
       backgroundColor: Colors.black,
